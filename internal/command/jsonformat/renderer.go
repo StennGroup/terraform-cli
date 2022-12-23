@@ -1,6 +1,9 @@
 package jsonformat
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/mitchellh/colorstring"
 
 	"github.com/hashicorp/terraform/internal/command/jsonplan"
@@ -20,10 +23,43 @@ type Renderer struct {
 	Colorize *colorstring.Colorize
 }
 
+type JSONLogType string
+type JSONLog map[string]interface{}
+
+const (
+	LogVersion         JSONLogType = "version"
+	LogPlannedChange   JSONLogType = "planned_change"
+	LogRefreshStart    JSONLogType = "refresh_start"
+	LogRefreshComplete JSONLogType = "refresh_complete"
+	LogApplyStart      JSONLogType = "apply_start"
+	LogApplyComplete   JSONLogType = "apply_complete"
+	LogChangeSummary   JSONLogType = "change_summary"
+	LogOutputs         JSONLogType = "outputs"
+)
+
 func (r Renderer) RenderPlan(plan Plan) {
-	panic("not implemented")
+	// panic("not implemented")
+	r.Streams.Printf("boop renderered plan!")
 }
 
-func (r Renderer) RenderLog(message map[string]interface{}) {
-	panic("not implemented")
+func (r Renderer) RenderLog(log JSONLog) {
+	msg, ok := log["@message"].(string)
+	if !ok {
+		return
+	}
+
+	switch JSONLogType(log["type"].(string)) {
+	case LogApplyStart, LogApplyComplete, LogRefreshStart, LogRefreshComplete:
+		s := strings.Split(msg, ":")
+		msg = fmt.Sprintf("[bold]%s: %s", s[0], s[1])
+
+		r.Streams.Print(r.Colorize.Color(msg))
+		r.Streams.Print("\n")
+	case LogChangeSummary:
+		msg = fmt.Sprintf("[bold][green]%s", msg)
+
+		r.Streams.Print("\n\n")
+		r.Streams.Print(r.Colorize.Color(msg))
+		r.Streams.Print("\n\n")
+	}
 }
