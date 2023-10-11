@@ -78,14 +78,15 @@ require (
 	github.com/zclconf/go-cty v1.12.1
 	github.com/zclconf/go-cty-debug v0.0.0-20191215020915-b22d67c1ba0b
 	github.com/zclconf/go-cty-yaml v1.0.3
-	golang.org/x/crypto v0.1.0
-	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4
-	golang.org/x/net v0.1.0
+	golang.org/x/crypto v0.14.0
+	golang.org/x/mod v0.8.0
+	golang.org/x/net v0.17.0
 	golang.org/x/oauth2 v0.0.0-20221014153046-6fdb5e3db783
-	golang.org/x/sys v0.2.0
-	golang.org/x/term v0.1.0
-	golang.org/x/text v0.4.0
-	golang.org/x/tools v0.1.12
+	golang.org/x/sys v0.13.0
+	golang.org/x/term v0.13.0
+	golang.org/x/text v0.13.0
+	golang.org/x/tools v0.6.0
+	golang.org/x/tools/cmd/cover v0.1.0-deprecated
 	google.golang.org/api v0.102.0
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c
 	google.golang.org/grpc v1.50.1
